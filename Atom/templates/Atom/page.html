@@ -1,0 +1,31 @@
+{% extends "Atom/base.html" %}
+
+{% load mytags %}
+{% block content %}
+    <h1>My posts</h1>
+    {% if object %}
+    <ul>
+
+      {% for posti in object %}
+      <li class="{% if posti.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'Atom:post-detail' posti.pk %}">{{posti.title}}</a>
+        <br>
+        {{ posti.message }}
+          <br>
+              Rating: {{ posti.cc }}
+        <br>
+        {{ posti.publication_date }}
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no posts.</p>
+    {% endif %}
+
+
+
+{% include 'Atom/pagination.html' %}
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'Atom/base.html' %}
+{% block content %}
+
+        <a href="{% url 'demos-ui-createview' %}">Go Back</a>
+        <form role="form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+        {{ from_context }}
+
+
+
+{% endblock %}

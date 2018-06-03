@@ -1,0 +1,23 @@
+{% extends "Atom/base.html" %}
+{% load bootstrap4 %}
+{% load mytags %}
+{% block content %}
+    <H1>{{ object.name }}</H1><br>
+    <b>post.publication_date</b><br>
+    <b>Count of  comments: </b>{% countCommentsTheme object.pk %}<br>
+    {% if posts %}
+
+        <b>Posts in this wall:</b> {% for post in posts %}<br>
+            <a href="{% url 'Atom:post-detail' post.pk %}">{{ post.title }}</a>
+    {% endfor %}
+
+    {% else %}No post{% endif %}
+
+{% if posts.has_other_pages %}
+
+    {% bootstrap_pagination posts %}
+
+    {% endif %}
+
+
+{% endblock %}

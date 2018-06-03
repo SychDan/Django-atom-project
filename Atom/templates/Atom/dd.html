@@ -1,0 +1,23 @@
+{% extends 'Atom/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h1>Posts</h1>
+        <hr>
+        {% for person in people %}
+            <h2>{{person}}</h2>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        var pageNum = {{ page.number }};
+        var hasNextPage = {{ page.has_next|lower }};
+        var searchText = "{{ request.GET.text_search }}";
+    </script>
+    <!-- core scripts -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- app scripts -->
+    <script type="text/javascript" src="{% static 'js/example.js' %}"></script>
+{% endblock %}

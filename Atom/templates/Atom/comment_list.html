@@ -1,0 +1,29 @@
+{% extends "Atom/base.html" %}
+{% load mytags %}
+{% block content %}
+    <h1>My comments</h1>
+
+    {% if comm_list %}
+    <ul>
+
+      {% for comms in comm_list %}
+          {% with comm=comms %}
+      <li class="{% if comm.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'Atom:post-detail' comm.post.pk %}">{{comm.post.title}}</a>
+        <br>
+        {{ comm.message }}
+          <br>
+           Rating: {{ comm.cc }}
+        <br>
+        {{ comm.publication_date }}
+      </li>
+          {% endwith %}
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no comments.</p>
+    {% endif %}
+{% include 'Atom/pagination.html' %}
+
+{% endblock %}

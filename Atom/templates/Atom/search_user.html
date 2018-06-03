@@ -1,0 +1,38 @@
+{% extends 'Atom/base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+<H1>User search</H1>
+<form method="GET" action="/search_user/">
+
+<p><label for="id_email" class="sr-only">Email address:</label> <input type="text" class="form-control" placeholder="Write username" name="name" maxlength="254" id="id_email" /></p>
+    <input type="submit" value="incert" class="btn btn-success btn-lg"></form>
+<hr>
+<div class="list-group">
+<div class="tt">
+    {% for i in people %}
+        <a href="{% url 'Atom:person-detail' i.pk %}" class="list-group-item">
+          <H4 class="list-group-item-heading">
+              {{ i.username }}
+          </H4>
+          <span class="badge">{{ i.like }}</span>
+      <p>{{ i.email }}</p>
+      </a>
+
+    {% endfor %}</div>
+</div>
+    {% if not people %}
+            <H3><b>No match</b></H3>
+    {% endif %}
+
+
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script>
+        var pageNum = {{ page.number }};
+        var hasNextPage = {{ page.has_next|lower }};
+        var name = "{{ request.GET.name }}";
+    </script>
+    <script src="{% static 'js/search_user.js' %}"></script>
+{% endblock %}

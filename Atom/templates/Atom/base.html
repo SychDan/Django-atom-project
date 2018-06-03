@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    {% load static %}
+    <title>Joe</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="{% static 'css/newbase.css' %}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div id="throbber" style="display:none; min-height:120px;"></div>
+<div id="noty-holder"></div>
+<div id="wrapper">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'Atom:home' %}">
+                <img src="http://www.clipartbest.com/cliparts/Rid/gnB/RidgnBLpT.png" alt="LOGO" width="200" height="50">
+            </a>
+        </div>
+        <ul class="nav navbar-right top-nav">
+            <li><a href="#" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.get_username }} <b class="fa fa-angle-down"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
+                    <li><a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{% url 'Atom:logout' %}"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li>
+                    <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> Search <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                    <ul id="submenu-1" class="collapse">
+                        <li><a href="{% url 'Atom:search_theme' %}"><i class="fa fa-tag"></i> Tags</a></li>
+                        <li><a href="{% url 'Atom:search_user' %}"><i class="fa fa-user"></i></i> User</a></li>
+                        <li><a href="{% url 'Atom:search_post' %}"><i class="fa fa-file-text"></i> Post</a></li>
+                        <li><a href="{% url 'Atom:search_wall' %}"><i class="fa fa-th-large"></i> Wall</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="{% url 'Atom:home' %}"><i class="fa fa-home"></i>  Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'Atom:contact' %}"><i class="fa fa-fw fa-paper-plane-o"></i> About us</a>
+                </li>
+                <li>
+                    <a href="{% url 'Atom:faq' %}"><i class="fa fa-fw fa fa-question-circle"></i> FAQ</a>
+                </li>
+                <li>
+                    <div id="back-to-top">
+	<i class="fa fa-chevron-up"></i>
+</div>
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row" id="main" >
+            <div class="col-sm-12 col-md-12 well" id="content">
+                {% block content %}{% endblock %}
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+	<script type="text/javascript">
+	$(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    $(".side-nav .collapse").on("hide.bs.collapse", function() {
+        $(this).prev().find(".fa").eq(1).removeClass("fa-angle-right").addClass("fa-angle-down");
+    });
+    $('.side-nav .collapse').on("show.bs.collapse", function() {
+        $(this).prev().find(".fa").eq(1).removeClass("fa-angle-down").addClass("fa-angle-right");
+    });
+})
+
+	</script>
+
+
+{% block js %}{% endblock %}
+</body>
+</html>

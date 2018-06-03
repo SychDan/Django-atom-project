@@ -1,0 +1,43 @@
+{% extends 'Atom/base.html' %}
+{% load static %}
+{% block content %}
+ <h1 class="page-header">Posts</h1>
+
+  <p>
+    <button type="button" class="btn btn-primary js-create" data-url="{% url 'Atom:create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New post
+    </button>
+  </p>
+<div id="'posts">
+  <table class="table rwd-table" id="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Wall</th>
+        <th scope="col">Publication date</th>
+        <th scope="col">Message</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'Atom/CRUD/list.html' %}
+    </tbody>
+  </table>
+
+  <div class="modal fade" id="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div></div>
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/likeDislike.js' %}"></script>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/Post.js' %}"></script>
+{% endblock %}

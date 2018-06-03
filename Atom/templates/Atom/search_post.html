@@ -1,0 +1,62 @@
+{% extends 'Atom/base.html' %}
+{% load bootstrap4 %}
+{% load mytags %}
+{% load static %}
+{% block content %}
+
+<H1>Post search</H1>
+<form method="GET" action="/search_post/" >
+{% csrf_token %}
+
+    <p><label for="id_email" class="sr-only">Email address:</label> <input type="text" class="form-control" placeholder="Write name of post" name="name" maxlength="254" id="id_email" /></p>
+    <input type="submit" value="incert" class="btn btn-success btn-lg"></form>
+<hr>
+
+<div class="list-group">
+     <div class="infinite-container">
+
+
+    {% for i in message %}
+
+
+      <div class="infinite-item">
+      <a href="{% url 'Atom:post-detail' i.pk %}" class="list-group-item">
+          <H4 class="list-group-item-heading">
+              {{ i.title}}
+          </H4>
+          <span class="badge">{{ i.cc }}</span>
+      <p>{{ i.message }}</p>
+      </a>
+      </div>
+
+
+    {% endfor %}
+     </div>
+</div>
+    {% if not message %}
+            <p><H3><b>No match</b></H3></p>
+    {% endif %}
+    <br>
+<div class="loading" style="display: none;">
+    Loading...
+  </div>
+
+{% if message.has_next %}
+    <a class="infinite-more-link" href="?page={{ message.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">More</a>
+  {% endif %}
+
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'js/infinite.min.js' %}"></script>
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
+{% endblock %}

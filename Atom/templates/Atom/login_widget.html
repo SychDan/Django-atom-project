@@ -1,0 +1,16 @@
+    {% load bootstrap4 %}
+    {% load staticfiles %}
+    <form id="contact_form" action="{% url 'Atom:login' %}" method="post" class="form-signin">
+        {% csrf_token %}
+        <img class="mb-4" src="{% static 'css/aur.jpg' %}" alt="" width="72" height="72">
+        <label for="id_username" class="sr-only">Login</label>
+        <input type="text" id="id_username" class="form-control" placeholder="Username" name="username" required autofocus>
+         <label for="id_password" class="sr-only">Password</label>
+      <input type="password" id="id_password" class="form-control" placeholder="Password" name="password" required>
+        {% buttons %}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Войти</button>
+            </div>
+        {% endbuttons %}
+    </form>
+

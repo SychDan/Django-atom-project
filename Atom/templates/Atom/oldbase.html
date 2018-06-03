@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+{% load staticfiles %}
+    <title>{% block title %}{% endblock %}</title>
+{% load bootstrap3 %}
+<script src="{% bootstrap_jquery_url %}"></script>
+{% bootstrap_javascript %}
+{% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'common.css' %}">
+</head>
+<body>
+<div class="container-fluid">
+<div class="row">
+  <div class="col-sm-2">
+
+  {% block sidebar %}
+
+<ul class="sidebar-nav">
+{% if user.is_authenticated %}
+     <li>User: {{ user.get_username }}</li>
+     <li><a href="{% url 'Atom:logout'%}?next={{request.path}}">Logout</a></li>
+
+    <li><a href="{% url 'Atom:search_user' %}">Find person</a> </li>
+    <li><a href="{% url 'Atom:search_post' %}">Find post</a> </li>
+    <li><a href="{% url 'Atom:search_wall' %}">Find wall</a> </li>
+    <li><a href="{% url 'Atom:profile' %}">Your profile</a> </li>
+    <li><a href="{% url 'Atom:form' %}">Try</a> </li>
+   {% else %}
+
+{% endif %}
+  </ul>
+{% endblock %}
+  </div>
+<div class="col-sm-10 ">
+    {% block up %}{% endblock %}
+    {% block content %}{% endblock %}
+
+</div>
+</div>
+{% block footer %}
+    <div class="navbar-fixed-bottom row-fluid">
+    <div class="navbar-inner">
+          <div class="container">
+
+    <hr>
+    <p>In the beginning, I want to create something unique, but now it looks like imagebord</p>
+          </div></div></div>
+{% endblock %}
+</div>
+</body>
+</html>

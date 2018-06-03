@@ -1,0 +1,15 @@
+{% load el_pagination_tags %}
+
+{% paginate entries %}
+{% for entry in entries %}
+    <li class="{% if entry.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'Atom:post-detail' entry.pk %}">{{entry.title}}</a>
+        <br>
+        {{ entry.message }}
+          <br>
+              Rating: {{ entry.cc }}
+        <br>
+        {{ entry.publication_date }}
+      </li>
+{% endfor %}
+{% show_pages %}

@@ -1,0 +1,39 @@
+{% for i in posts %}
+  <tr class="vcard">
+    <td data-title="#">{{ i.pk }}</td>
+    <td data-title="Title">{{ i.title }}</td>
+    <td data-title="Author">{{ i.Wall.name }}</td>
+    <td data-title="Publication date">{{ i.publication_date }}</td>
+    <td data-title="Message">{{ i.message }}</td>
+    <td style="width: 150px">
+      <button type="button"
+              class="btn btn-warning btn-sm js-update"
+              data-url="{% url 'Atom:update' i.pk %}">
+        <span class="glyphicon glyphicon-pencil"></span> Edit
+      </button>
+      <button type="button"
+              class="btn btn-danger btn-sm js-delete"
+              data-url="{% url 'Atom:delete' i.pk %}">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
+            <ul>
+        <li data-id="{{ i.id }}" data-type="post" data-action="like" title="Нравится">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            <span data-count="like">{{ i.vote.likes.count }}</span>
+        </li>
+        <li data-id="{{ i.id }}" data-type="post" data-action="dislike" title="Не нравится">
+            <span class="glyphicon glyphicon-thumbs-down"></span>
+            <span data-count="dislike">{{ i.vote.dislikes.count }}</span>
+        </li>
+            <li data-id="{{ i.id }}" data-type="post" data-action="sum">
+            <span class="glyphicon glyphicon-thumbs"></span>
+           <span data-count="sum">{{ i.votes.sum_rating }}</span>
+        </li>
+    </ul>
+    </td>
+  </tr>
+{% empty %}
+  <tr>
+    <td colspan="8" class="text-center bg-warning">No book</td>
+  </tr>
+{% endfor %}

@@ -1,0 +1,18 @@
+{% extends "Atom/base.html" %}
+{% block content %}
+    <H1>{{ person.username }}</H1><br>
+    First name: <b>{{ person.first_name }}</b><br>
+    Last name: <b>{{ person.last_name }}</b><br>
+    Date of doined: <b>{{ person.date_joined }}</b><br>
+    Last login: <b>{{ person.last_login }}</b><br>
+    {% if person.post_set.all %}
+        <b>His posts: </b>{% for post in person.post_set.all %}<br>
+        <a href="{% url 'Atom:post-detail' post.pk %}">{{ post.title }}</a>
+    {% endfor %}
+    {% else %}
+        No posts
+    {% endif %}
+
+
+
+{% endblock %}

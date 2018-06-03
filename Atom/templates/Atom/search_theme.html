@@ -1,0 +1,45 @@
+{% extends 'Atom/base.html' %}
+{% load bootstrap4 %}
+{% load mytags %}
+{% block content %}
+<H1>Tags search</H1>
+<form method="GET" action="/search_theme/">
+{% csrf_token %}
+{{ form.as_p }}
+    <input type="submit" value="incert"></form>
+
+
+
+
+
+
+
+
+    {% for i in message %}
+        <a href="{% url 'Atom:theme-detail' i.pk %}">{{ i.name }}</a>+{% countCommentsTheme i.pk %}
+        <br>
+    {% endfor %}
+
+    {% if not message %}
+            <p><H3><b>No match</b></H3></p>
+    {% endif %}
+    <br>
+{% if message.has_other_pages %}
+<div class="pagination">
+    <span class="step-links">
+        {% if message.has_previous %}
+            <a href="?page={{ message.previous_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ message.number }} of {{ message.paginator.num_pages }}.
+        </span>
+
+        {% if message.has_next %}
+            <a href="?page={{ message.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+    {% endif %}
+{% endblock %}

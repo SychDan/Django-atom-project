@@ -1,0 +1,13 @@
+{% for book in posts %}
+  {{ book.pk }}<br>
+    <strong>{{ book.title }}</strong><br>
+    {{ book.person_id }}<br>
+    {{ book.publication_date }}<br>
+    {{ book.message }}<br>
+ <hr>
+
+{% empty %}
+  <tr>
+    <td colspan="8" class="text-center bg-warning">No book</td>
+  </tr>
+{% endfor %}

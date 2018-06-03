@@ -1,0 +1,44 @@
+{% extends 'Atom/base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+<H1>Wall search</H1>
+<form method="GET" action="/search_wall/">
+{% csrf_token %}
+{{ form.as_p }}
+    <input type="submit" value="incert"></form>
+<div class="infinite-container">
+    {% for i in message %}
+        <div class="infinite-item">
+        <a href="{% url 'Atom:wall-detail' i.pk %}">{{ i.name }}</a> +{{ i.cc }}
+        <br>
+        </div>
+    {% endfor %}
+</div>
+    {% if not message %}
+            <p><H3><b>No match</b></H3></p>
+    {% endif %}
+    <br>
+     <div class="loading" style="display: none;">
+    Loading...
+  </div>
+
+{% if message.has_next %}
+    <a class="infinite-more-link" href="?page={{ message.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">More</a>
+  {% endif %}
+
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'js/infinite.min.js' %}"></script>
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
+{% endblock %}

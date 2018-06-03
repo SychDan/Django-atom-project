@@ -1,0 +1,72 @@
+{% extends "Atom/base.html" %}
+{% load bootstrap4 %}
+{% load mytags %}
+{% block content %}
+
+
+
+                            <h1>{{ object.title }}</h1>
+                            <div class="lead-image">
+                                <img src="img/hands-big.png" alt="Hands" class="img-responsive">
+                                <div class="meta clearfix">
+
+                                    <div class="author">
+                                        <i class="fa fa-user"></i>
+                                        <span class="data"><a href="{% url 'Atom:person-detail' object.person.pk %}">{{object.person }}</a></span>
+                                    </div>
+                                    <div class="date">
+                                        <i class="fa fa-calendar"></i>
+                                        <span class="data">{{ object.publication_date}}</span>
+                                    </div>
+                                    <div class="comments">
+                                        <i class="fa fa-comments"></i>
+                                        <span class="data"><a href="#comments">{% countComments object.pk %} Comments</a></span>
+                                    </div>
+                                    <div class="like">
+                                        <i class="fa fa-heart"></i>
+                                        <span class="data">{{ like }}</span>
+                                    </div>
+                                    <div class="tags">
+                                        <i class="fa fa-tag"></i>{% for i in tags %}
+    <a href="{% url 'Atom:theme-detail' i.pk %}">{{ i.name }}</a>,
+{% endfor %}<br>
+                                    </div>
+                                </div>
+                            </div>
+    <hr>
+    <div class="body">{{ object.message }}</div>
+
+  <hr>
+    {% if user.is_authenticated %}
+    <div class="card my-4">
+            <h5 class="card-header">Leave a Comment:</h5>
+            <div class="card-body">
+              <form action="." method="post">
+      {% csrf_token %}
+             <div class="form-group">
+      {% bootstrap_form form %}
+                 </div>
+             {% bootstrap_button "send" button_type="submit" button_class="btn-primary"%}
+    </form>
+            </div>
+          </div>
+    {% endif %}
+    <h5><b>Comments:</b></h5><hr> {% for comm in comments %}
+    <div class="media mb-4">
+
+            <div class="media-body">
+              <h5 class="mt-0"><a href="{% url 'Atom:person-detail' comm.person_id %}">{{ comm.person }}</a></h5>
+              {{ comm.message }}
+            </div>
+          </div>
+
+    {% endfor %}
+
+{% if comments.has_other_pages %}
+
+    {% bootstrap_pagination comments %}
+
+    {% endif %}
+
+
+{% endblock %}

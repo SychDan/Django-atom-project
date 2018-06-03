@@ -1,0 +1,8 @@
+{% extends 'Atom/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<H1>Welcome to Joe's!</H1>
+    <a href="{% url 'Atom:login' %}">
+    {% bootstrap_button "Continue" button_type="link" button_class="btn-default"  %}
+    </a>
+{% endblock %}
